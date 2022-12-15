@@ -7,14 +7,18 @@ using UnityEngine.Serialization;
 public class PlayerMovement : MonoBehaviour
 { 
     [SerializeField] private float _force = 38f;
-  
+    
+    private MouseСlicksUI _mouseСlicksUI;
+    private int _clicks;
     private Rigidbody _rigidbody;
     private Vector3 _target;
     private Vector3 _startPosition = new (0, 0.7f, 0);
+   
 
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        _mouseСlicksUI = FindObjectOfType<MouseСlicksUI>();
     }
     
     private void Update()
@@ -29,11 +33,14 @@ public class PlayerMovement : MonoBehaviour
         }
         
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
+        
         if (Physics.Raycast(ray, out var hitInfo))
         {
-            _rigidbody.velocity = Vector3.zero;
-            MoveTowardsSelectedPoint(hitInfo);
+           _rigidbody.velocity = Vector3.zero;
+           MoveTowardsSelectedPoint(hitInfo);
+           
+           _clicks++;
+           _mouseСlicksUI.ClicksCounter(_clicks);
         }
     }
     private void MoveTowardsSelectedPoint(RaycastHit hitInfo)

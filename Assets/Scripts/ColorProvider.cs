@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ColorProvider : MonoBehaviour
 {
-    [SerializeField] private Color[] _colors;
+    [SerializeField] public Color[] _colors;
 
     public Color GetColor()
     {
